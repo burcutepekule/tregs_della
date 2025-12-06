@@ -274,7 +274,8 @@ NumericVector calculate_epithelial_ros_cpp(
 NumericMatrix diffuse_matrix_cpp(
     NumericMatrix mat,
     double D,
-    double max_cell_value)
+    double max_cell_value,
+    bool reflect_top = false)
 {
   int nr = mat.nrow();
   int nc = mat.ncol();
@@ -286,6 +287,15 @@ NumericMatrix diffuse_matrix_cpp(
     for (int j = 0; j < nc; j++)
     {
       padded(i + 1, j + 1) = mat(i, j);
+    }
+  }
+
+  // REFLECTIVE boundary at TOP (y=0, epithelium boundary)
+  if (reflect_top)
+  {
+    for (int j = 0; j < nc; j++)
+    {
+      padded(0, j + 1) = mat(0, j); // Reflect epithelium
     }
   }
 

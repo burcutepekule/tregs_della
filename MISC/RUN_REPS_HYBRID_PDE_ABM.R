@@ -136,11 +136,12 @@ for (reps_in in 0:(num_reps-1)){
     }
 
     # 2.2 Diffusion for all fields
-    P_field = diffuse_matrix_cpp(P_field, D_microbe, max_microbe_concentration)
-    C_field = diffuse_matrix_cpp(C_field, D_microbe, max_microbe_concentration)
-    DAMPs = diffuse_matrix_cpp(DAMPs, diffusion_speed_DAMPs, max_cell_value_DAMPs)
-    SAMPs = diffuse_matrix_cpp(SAMPs, diffusion_speed_SAMPs, max_cell_value_SAMPs)
-    ROS = diffuse_matrix_cpp(ROS, diffusion_speed_ROS, max_cell_value_ROS)
+    P_field = diffuse_matrix_cpp(P_field, D_microbe, max_microbe_concentration, reflect_top=TRUE)
+    C_field = diffuse_matrix_cpp(C_field, D_microbe, max_microbe_concentration, reflect_top=TRUE)
+    
+    DAMPs = diffuse_matrix_cpp(DAMPs, diffusion_speed_DAMPs, max_cell_value_DAMPs, reflect_top=FALSE)
+    SAMPs = diffuse_matrix_cpp(SAMPs, diffusion_speed_SAMPs, max_cell_value_SAMPs, reflect_top=FALSE)
+    ROS = diffuse_matrix_cpp(ROS, diffusion_speed_ROS, max_cell_value_ROS, reflect_top=FALSE)
 
     # 2.3 Decay
     DAMPs = DAMPs - DAMPs_decay * DAMPs
